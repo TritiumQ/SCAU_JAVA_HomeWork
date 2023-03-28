@@ -6,12 +6,24 @@
 package com.demo.imagebrowser;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+import javafx.scene.text.TextFlow;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.File;
+import java.io.FileInputStream;
 
 public class MainController {
 	@FXML
@@ -59,15 +71,43 @@ public class MainController {
 	@FXML
 	public void OnClickAboutAction()
 	{
-	
+		try
+		{
+			Text groupMember = new Text("小组成员：aaa, bbb, ccc \n");
+			groupMember.setFont(Font.loadFont("file:src/main/resources/Fonts/smiley-sans-v1.1.1/SmileySans-Oblique.ttf", 12));
+			groupMember.setFill(Color.BLUE);
+			
+			TextFlow about = new TextFlow();
+			about.getChildren().add(groupMember);
+			about.setTextAlignment(TextAlignment.CENTER);
+			
+			VBox vbox = new VBox(about);
+			vbox.setAlignment(Pos.CENTER);
+			
+			Scene newScene = new Scene(vbox, 240, 160);
+			
+			Stage stage = new Stage();
+			
+			stage.setTitle("Image Browser demoVersion");
+			stage.getIcons().add(new Image("file:"+"src/main/resources/UIElements/icon1.png"));
+			stage.setScene(newScene);
+			stage.initStyle(StageStyle.UNDECORATED);
+			
+			stage.show();
+		} catch (Exception e) { e.printStackTrace(); }
+		
 	}
 	
 	@FXML
 	private void setImage(String path)
 	{
-		Image img = new Image("file:" + path);
-		v_image.setImage(img);
-		l_address.setText(path);
+		try
+		{
+			Image img = new Image("file:" + path);
+			v_image.setImage(img);
+			l_address.setText(path);
+		}catch(Exception e) { e.printStackTrace(); }
+
 	}
 	
 }

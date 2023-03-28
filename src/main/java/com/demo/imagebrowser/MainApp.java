@@ -8,19 +8,24 @@ package com.demo.imagebrowser;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
-import java.io.Console;
+import java.io.FileInputStream;
 import java.io.IOException;
 
-public class HelloApplication extends Application {
+public class MainApp extends Application {
 	@Override
 	public void start(Stage stage) throws IOException {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ImageBrowser-view.fxml"));
-		MainController controller = fxmlLoader.getController();
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Viewer.fxml"));
 		Scene scene = new Scene(fxmlLoader.load());
 		
-		stage.setTitle("Image Browser demoVersion");
+		stage.initStyle(StageStyle.UNDECORATED);
 		stage.setScene(scene);
 		stage.show();
 	}
