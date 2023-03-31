@@ -6,7 +6,6 @@
 package com.demo.imagebrowser;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -23,9 +22,8 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.File;
-import java.io.FileInputStream;
 
-public class MainController {
+public class demoController {
 	@FXML
 	private MenuBar m_bar;
 	
