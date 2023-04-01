@@ -1,4 +1,4 @@
-package com.demo.imagebrowser;
+package com.demo.imagebrowser.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TreeView;

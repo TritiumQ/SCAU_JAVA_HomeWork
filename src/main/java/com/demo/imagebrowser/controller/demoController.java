@@ -3,7 +3,7 @@
  * @version alpha0.1
  *
  */
-package com.demo.imagebrowser;
+package com.demo.imagebrowser.controller;
 
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;

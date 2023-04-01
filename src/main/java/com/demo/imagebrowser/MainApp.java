@@ -5,6 +5,7 @@
  */
 package com.demo.imagebrowser;
 
+import com.demo.imagebrowser.StaticResources;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
