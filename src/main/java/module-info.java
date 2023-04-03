@@ -4,8 +4,8 @@ module com.demo.imagebrowser {
 	
 	requires org.controlsfx.controls;
 	
-	opens com.demo.imagebrowser to javafx.fxml;
-	exports com.demo.imagebrowser;
-	exports com.demo.imagebrowser.controller;
-	opens com.demo.imagebrowser.controller to javafx.fxml;
+	opens demo.v1 to javafx.fxml;
+	exports demo.v1;
+	exports demo.v1.controller;
+	opens demo.v1.controller to javafx.fxml;
 }
