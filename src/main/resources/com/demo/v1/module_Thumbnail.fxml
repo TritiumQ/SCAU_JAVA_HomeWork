@@ -14,7 +14,7 @@
          <children>
             <ImageView fitHeight="183.0" fitWidth="260.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../UIElements/kailu.jpg" />
+                  <Image url="@../../../Icon/kailu.jpg" />
                </image>
             </ImageView>
             <Label alignment="CENTER" prefHeight="20.0" prefWidth="320.0" text="picture.png" textAlignment="CENTER">

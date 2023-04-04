@@ -18,6 +18,7 @@ public class TestApp extends Application {
 	Scene scn1, scn2;
 	Stage stg;
 	int state = 1;
+	int j = 0;
 	@Override
 	public void init()
 	{
@@ -37,12 +38,14 @@ public class TestApp extends Application {
 			}
 		});
 		/*场景1*/
+		Label label1 = new Label(Integer.toString(j));
+		label1.setTextAlignment(TextAlignment.CENTER);
 		vBox1 = new VBox();
-		btn1 = new Button("关于");
+		btn1 = new Button("修改");
 		btn1.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<Event>() {
 			@Override
 			public void handle(Event event) {
-				Stage stg = new Stage();
+				/*Stage stg = new Stage();
 				VBox vBox = new VBox();
 				Label label = new Label("这是一个测试语句");
 				label.setTextAlignment(TextAlignment.CENTER);
@@ -50,15 +53,17 @@ public class TestApp extends Application {
 				vBox.getChildren().add(label);
 				Scene scn = new Scene(vBox, 240, 240);
 				stg.setScene(scn);
-				stg.show();
+				stg.show();*/
+				label1.setText(Integer.toString(++j));
 			}
 		});
 		vBox1.setAlignment(Pos.CENTER);
-		vBox1.getChildren().addAll(btn1,btn2);
+		vBox1.getChildren().addAll(btn1,btn2,label1);
 		scn1 = new Scene(vBox1, 320, 320);
 		
 		/*场景2*/
 		vBox2 = new VBox();
+		vBox2.setAlignment(Pos.CENTER);
 		Label label2 = new Label("这是窗口2");
 		vBox2.getChildren().addAll(label2, btn3);
 		scn2 = new Scene(vBox2, 320, 320);
