@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 
 import javax.swing.filechooser.FileSystemView;
 import java.io.File;
+import java.util.Objects;
 
 public class TestApp extends Application {
 	@Override
@@ -19,7 +20,7 @@ public class TestApp extends Application {
 	}
 	@Override
 	public void start(Stage stage) throws Exception {
-		FileTreeItem item = new FileTreeItem(FileSystemView.getFileSystemView().getHomeDirectory());
+		FileTreeItem item = new FileTreeItem(Objects.requireNonNull(FileSystemView.getFileSystemView().getHomeDirectory().listFiles())[0]);
 		
 		TreeView<String> treeView = new TreeView<>();
 		treeView.setRoot(item);
@@ -30,7 +31,7 @@ public class TestApp extends Application {
 		vb.setAlignment(Pos.CENTER);
 		vb.getChildren().add(treeView);
 		
-		Scene scn = new Scene(vb, 320, 800);
+		Scene scn = new Scene(vb, 320, 480);
 		stage.setScene(scn);
 		stage.show();
 	}
