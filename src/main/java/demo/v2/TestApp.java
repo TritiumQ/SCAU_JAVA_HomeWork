@@ -20,7 +20,7 @@ public class TestApp extends Application {
 	}
 	@Override
 	public void start(Stage stage) throws Exception {
-		FileTreeItem item = new FileTreeItem(Objects.requireNonNull(FileSystemView.getFileSystemView().getHomeDirectory().listFiles())[0]);
+		/*FileTreeItem item = new FileTreeItem(Objects.requireNonNull(FileSystemView.getFileSystemView().getHomeDirectory().listFiles())[0]);
 		
 		TreeView<String> treeView = new TreeView<>();
 		treeView.setRoot(item);
@@ -33,7 +33,8 @@ public class TestApp extends Application {
 		
 		Scene scn = new Scene(vb, 320, 480);
 		stage.setScene(scn);
-		stage.show();
+		stage.show();*/
+		
 	}
 	
 	public static void main(String[] args) { launch(args); }

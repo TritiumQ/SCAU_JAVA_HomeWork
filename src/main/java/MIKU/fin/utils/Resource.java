@@ -1,4 +1,4 @@
-package demo.v2.util;
+package MIKU.fin.utils;
 
 import javax.swing.filechooser.FileSystemView;
 import java.io.File;
@@ -30,4 +30,8 @@ public class Resource
 	 * 文件树根目录, 在windows下为"此电脑", 在Linux下为"?";
 	 */
 	public static final File FILE_ROOT = Objects.requireNonNull(FileSystemView.getFileSystemView().getHomeDirectory().listFiles())[0];
+	/**
+	 * 程序标题
+	 */
+	public static String title = "MIKU's Image Manager";
 }
