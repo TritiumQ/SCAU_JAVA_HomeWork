@@ -9,9 +9,7 @@ module MIKU {
 	requires java.desktop;
 	
 	opens MIKU.fin to javafx.fxml;
-	
-	opens demo.v2 to javafx.fxml;
-	opens demo.v2.controller to javafx.fxml;
-	exports demo.v2;
-	exports demo.v2.util;
+	opens MIKU.fin.controllers to javafx.fxml;
+	exports MIKU.fin;
+	exports MIKU.fin.utils;
 }

@@ -1,12 +1,13 @@
-package demo.v2.util;
+package MIKU.fin.utils;
 
 import javafx.scene.image.Image;
 import javafx.embed.swing.SwingFXUtils;
 
-import javax.swing.*;
+import javax.swing.Icon;
 import javax.swing.filechooser.FileSystemView;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.Objects;
 
 /**
  * 文件工具类
@@ -14,6 +15,27 @@ import java.io.File;
  */
 public class FileUtil
 {
+	/**
+	 * 文件树根目录, 在windows下为"此电脑", 在Linux下为"/";
+	 */
+	public static final File FILE_ROOT = Objects.requireNonNull(FileSystemView.getFileSystemView().getHomeDirectory().listFiles())[0];
+	/**
+	 * 主图标路径
+	 */
+	public static String PATH_MAIN_ICON = "/Icon/icon1.png";
+	/**
+	 * 主界面FXML文件路径
+	 */
+	public static String PATH_MAIN_FXML = "/view/main-view_new.fxml";
+	/**
+	 * 图片编辑器FXML文件路径
+	 */
+	public static String PATH_EDITOR_FXML = "/view/image-editor.fxml";
+	/**
+	 * 图片查看器FXML文件路径
+	 */
+	public static String PATH_VIEWER_FXML = "/view/image-viewer.fxml";
+	
 	/**
 	 * 获取文件在系统中的图标
 	 */

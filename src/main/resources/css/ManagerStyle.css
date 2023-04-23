@@ -1,3 +1,7 @@
+/**
+ * 自定义样式表
+ */
+
 /*通用按钮格式*/
 .button{
     -fx-border-color: transparent;
@@ -20,3 +24,28 @@
     -fx-background-color: linear-gradient(to top, f4f4f4, white);
 }
 
+/*目录树样式*/
+.tree-view{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-border-width: 0 0 0 0;
+    -fx-font-size: 13;
+}
+
+/*菜单栏样式*/
+.menu-bar{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-border-width: 0 0 0 0;
+}
+
+.image-thumbnail-pane{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-border-width: 0 0 0 0;
+}
+
+.image-thumbnail-pane-selected{
+    -fx-background-color: GREY;
+    -fx-border-width: 0 0 0 0;
+}
