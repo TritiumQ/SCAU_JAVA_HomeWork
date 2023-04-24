@@ -13,8 +13,13 @@ import java.util.Objects;
 public class MainApplication extends Application
 {
 	private Stage mainStage;
-	private Stage editorStage;
 	private Stage viewerStage;
+	
+	@Override
+	public void init() throws Exception
+	{
+	
+	}
 	@Override
 	public void start(Stage stage) throws Exception
 	{

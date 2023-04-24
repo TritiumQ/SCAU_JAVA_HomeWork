@@ -2,6 +2,7 @@ package MIKU.fin.components;
 
 
 import MIKU.fin.utils.FileUtil;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
 import javafx.scene.image.ImageView;
@@ -31,15 +32,17 @@ public class SystemFileTreeItem extends TreeItem<String>
 	public ObservableList<TreeItem<String>> getChildren()
 	{
 		ObservableList<TreeItem<String>> children = super.getChildren();
-		if(!this.isInitialized && this.isExpanded())
-		{
-			this.isInitialized = true;
-			for(File f : Objects.requireNonNull(file.listFiles()))
+		Platform.runLater(()->{
+			if(!this.isInitialized && this.isExpanded())
 			{
-				if(f.isDirectory())
-					children.add(new SystemFileTreeItem(f));
+				this.isInitialized = true;
+				for(File f : Objects.requireNonNull(file.listFiles()))
+				{
+					if(f.isDirectory())
+						children.add(new SystemFileTreeItem(f));
+				}
 			}
-		}
+		});
 		return children;
 	}
 	

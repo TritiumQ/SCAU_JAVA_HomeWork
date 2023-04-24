@@ -10,7 +10,7 @@
     -fx-background-color: transparent;
 }
 .button:pressed {
-    -fx-background-color: f4f4f4;
+    -fx-background-color: b0b0b0;
 }
 
 /*底边栏格式*/
@@ -42,10 +42,5 @@
 .image-thumbnail-pane{
     -fx-background-color: transparent;
     -fx-border-color: transparent;
-    -fx-border-width: 0 0 0 0;
-}
-
-.image-thumbnail-pane-selected{
-    -fx-background-color: GREY;
     -fx-border-width: 0 0 0 0;
 }

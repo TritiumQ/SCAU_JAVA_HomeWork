@@ -19,6 +19,8 @@ public class FileUtil
 	 * 文件树根目录, 在windows下为"此电脑", 在Linux下为"/";
 	 */
 	public static final File FILE_ROOT = Objects.requireNonNull(FileSystemView.getFileSystemView().getHomeDirectory().listFiles())[0];
+	
+	public static final String PATH_APP_DATA = System.getenv("APPDATA");
 	/**
 	 * 主图标路径
 	 */

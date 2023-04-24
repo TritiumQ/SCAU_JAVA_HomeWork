@@ -1,6 +1,6 @@
 package MIKU.fin.components;
 
-import MIKU.fin.moduel.ImageFile;
+import MIKU.fin.module.ImageFile;
 import MIKU.fin.utils.FontUtil;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -27,7 +27,7 @@ public class ImageThumbnailPane extends BorderPane
 		actionInit();
 		
 		this.imageFile = imageFile;
-		this.thumbnail = new ImageView(new Image(imageFile.getImageURL(),100,100,true,true,true));
+		this.thumbnail = new ImageView(new Image(imageFile.getImageUri(),100,100,true,true,true));
 		this.thumbnail.setPreserveRatio(true);
 		this.thumbnail.setFitHeight(size);
 		this.thumbnail.setFitWidth(size);
@@ -77,7 +77,7 @@ public class ImageThumbnailPane extends BorderPane
 	}
 	
 	private void setSelected() {
-		this.setStyle("-fx-background-color: GREY");
+		this.setStyle("-fx-background-color: #c8eaf5");
 		isSelected = false;
 	}
 }

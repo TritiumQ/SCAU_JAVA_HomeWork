@@ -6,6 +6,8 @@ module MIKU {
 	
 	requires org.controlsfx.controls;
 	
+	requires org.json;
+	
 	requires java.desktop;
 	
 	opens MIKU.fin to javafx.fxml;
