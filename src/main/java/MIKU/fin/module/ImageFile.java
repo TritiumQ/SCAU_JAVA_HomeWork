@@ -1,6 +1,7 @@
 package MIKU.fin.module;
 
-import java.awt.*;
+import javafx.scene.image.Image;
+
 import java.io.File;
 
 public class ImageFile
@@ -36,17 +37,31 @@ public class ImageFile
 		return imageFile;
 	}
 	
+	/**
+	 * 获取图片文件的绝对路径
+	 * @return
+	 */
 	public String getImagePath()
 	{
 		return imagePath;
 	}
 	
+	/**
+	 * 获取图片文件URI
+	 * @return
+	 */
 	public String getImageUri()
 	{
 		return imageUri;
 	}
+	
 	public String getImageName()
 	{
 		return imageName;
+	}
+	
+	public Image genImage()
+	{
+		return new Image(getImageUri());
 	}
 }

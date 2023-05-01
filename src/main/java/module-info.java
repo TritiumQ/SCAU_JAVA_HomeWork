@@ -8,6 +8,8 @@ module MIKU {
 	
 	requires org.json;
 	
+	requires org.apache.logging.log4j;
+	
 	requires java.desktop;
 	
 	opens MIKU.fin to javafx.fxml;

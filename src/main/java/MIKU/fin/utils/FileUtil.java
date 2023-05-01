@@ -15,6 +15,17 @@ import java.util.Objects;
  */
 public class FileUtil
 {
+	
+	public static boolean isSupportImageFormat(File file) {
+		String fileName = file.getName().toUpperCase();
+		//支持的照片格式：.JPG、.JPEG、.GIF、.PNG、和.BMP。
+		return fileName.endsWith("JPG") ||
+				fileName.endsWith("JPEG") ||
+				fileName.endsWith("GIF") ||
+				fileName.endsWith("PNG") ||
+				fileName.endsWith("BMP") ||
+				fileName.endsWith("WEBP");
+	}
 	/**
 	 * 文件树根目录, 在windows下为"此电脑", 在Linux下为"/";
 	 */
@@ -30,13 +41,9 @@ public class FileUtil
 	 */
 	public static String PATH_MAIN_FXML = "/view/main-view_new.fxml";
 	/**
-	 * 图片编辑器FXML文件路径
-	 */
-	public static String PATH_EDITOR_FXML = "/view/image-editor.fxml";
-	/**
 	 * 图片查看器FXML文件路径
 	 */
-	public static String PATH_VIEWER_FXML = "/view/image-viewer.fxml";
+	public static String PATH_VIEWER_FXML = "/view/viewer-view.fxml";
 	
 	/**
 	 * 获取文件在系统中的图标

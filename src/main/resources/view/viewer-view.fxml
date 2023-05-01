@@ -2,22 +2,24 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="480.0" minWidth="640.0" prefHeight="800.0" prefWidth="1280.0" stylesheets="@../css/ManagerStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="480.0" minWidth="640.0" prefHeight="800.0" prefWidth="1280.0" stylesheets="@../css/ManagerStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MIKU.fin.controllers.ViewerController">
    <children>
       <BorderPane prefHeight="800.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
             <AnchorPane prefHeight="50.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
                <children>
-                  <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="1280.0" styleClass="header_bar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <HBox alignment="CENTER" prefHeight="50.0" prefWidth="1280.0">
                      <children>
-                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0" textAlignment="CENTER">
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#toPrevious" prefHeight="50.0" prefWidth="50.0" textAlignment="CENTER">
                            <graphic>
                               <ImageView fitHeight="35.0" fitWidth="35.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -32,36 +34,7 @@
                               <Tooltip text="主页" />
                            </tooltip>
                         </Button>
-                     </children>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                  </HBox>
-               </children>
-            </AnchorPane>
-         </top>
-         <center>
-            <AnchorPane prefHeight="660.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
-               <children>
-                  <HBox alignment="CENTER" prefHeight="750.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="750.0" prefWidth="50.0" textAlignment="CENTER">
-                           <graphic>
-                              <ImageView fitHeight="35.0" fitWidth="35.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../Icon/Grey/left.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <padding>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </padding>
-                           <tooltip>
-                              <Tooltip text="主页" />
-                           </tooltip>
-                        </Button>
-                        <ImageView fitHeight="750.0" fitWidth="1080.0" pickOnBounds="true" preserveRatio="true" />
-                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="750.0" prefWidth="50.0" textAlignment="CENTER">
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#toNext" prefHeight="50.0" prefWidth="50.0" textAlignment="CENTER">
                            <graphic>
                               <ImageView fitHeight="35.0" fitWidth="35.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -76,8 +49,112 @@
                               <Tooltip text="主页" />
                            </tooltip>
                         </Button>
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0" textAlignment="CENTER">
+                           <graphic>
+                              <ImageView fitHeight="35.0" fitWidth="35.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../Icon/Grey/zoomin.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                           <tooltip>
+                              <Tooltip text="返回" />
+                           </tooltip>
+                        </Button>
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0" textAlignment="CENTER">
+                           <graphic>
+                              <ImageView fitHeight="35.0" fitWidth="35.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../Icon/Grey/zoomout.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                           <tooltip>
+                              <Tooltip text="返回" />
+                           </tooltip>
+                        </Button>
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0" textAlignment="CENTER">
+                           <graphic>
+                              <ImageView fitHeight="35.0" fitWidth="35.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../Icon/Grey/undo.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                           <tooltip>
+                              <Tooltip text="返回" />
+                           </tooltip>
+                        </Button>
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0" textAlignment="CENTER">
+                           <graphic>
+                              <ImageView fitHeight="35.0" fitWidth="35.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../Icon/Grey/redo.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                           <tooltip>
+                              <Tooltip text="返回" />
+                           </tooltip>
+                        </Button>
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0" textAlignment="CENTER">
+                           <graphic>
+                              <ImageView fitHeight="35.0" fitWidth="35.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../Icon/Grey/fullscreen.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                           <tooltip>
+                              <Tooltip text="返回" />
+                           </tooltip>
+                        </Button>
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0" textAlignment="CENTER">
+                           <graphic>
+                              <ImageView fitHeight="35.0" fitWidth="35.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../Icon/Grey/Report.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                           <tooltip>
+                              <Tooltip text="返回" />
+                           </tooltip>
+                        </Button>
                      </children>
                   </HBox>
+               </children>
+            </AnchorPane>
+         </top>
+         <center>
+            <AnchorPane prefHeight="660.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
+               <children>
+                  <ScrollPane fx:id="imageBox" hbarPolicy="NEVER" layoutX="-7.0" layoutY="-14.0" pannable="true" prefHeight="749.6" prefWidth="1280.0" vbarPolicy="NEVER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" />
+                    </content>
+                     <effect>
+                        <Glow />
+                     </effect>
+                  </ScrollPane>
                </children>
             </AnchorPane>
          </center>

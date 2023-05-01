@@ -10,16 +10,31 @@ import javafx.scene.text.Font;
 
 public class InformationPane extends HBox
 {
-	private final Label imageCounter;
-	private final Label imageSizeCounter;
-	private int counter = 0;
-	private long sizeCounter = 0;
+	private final Label imageCounter, selectedImageCounter;
+	private final Label imageSize;
+	private int count = 0, selectedCount = 0;
+	private long size = 0, selectedSize = 0;
 	public InformationPane()
 	{
 		Font ft = FontUtil.genFont(FontUtil.FONT_YAHEI,13);
 		Insets it = new Insets(0,5,0,5);
 		
-		Label l1 = new Label("当前目录下共有: ");
+		Label l1_1 = new Label("当前目录下共有: ");
+		l1_1.setFont(ft);
+		l1_1.setAlignment(Pos.CENTER);
+		l1_1.setPadding(it);
+		
+		selectedImageCounter = new Label("0");
+		selectedImageCounter.setFont(ft);
+		selectedImageCounter.setAlignment(Pos.CENTER);
+		selectedImageCounter.setPadding(it);
+		
+		Label l1_2 = new Label("张图片.");
+		l1_2.setPadding(it);
+		l1_2.setFont(ft);
+		l1_2.setAlignment(Pos.CENTER);
+		
+		Label l1 = new Label("当前已选中: ");
 		l1.setFont(ft);
 		l1.setAlignment(Pos.CENTER);
 		l1.setPadding(it);
@@ -38,21 +53,42 @@ public class InformationPane extends HBox
 		l3.setAlignment(Pos.CENTER);
 		l3.setPadding(it);
 		
-		imageSizeCounter = new Label("0");
-		imageSizeCounter.setFont(ft);
-		imageSizeCounter.setAlignment(Pos.CENTER);
+		imageSize = new Label("0");
+		imageSize.setFont(ft);
+		imageSize.setAlignment(Pos.CENTER);
 		
-		this.getChildren().addAll(l1,imageCounter,l2,l3,imageSizeCounter);
+		this.getChildren().addAll(l1_1,imageCounter, l1_2, l1,selectedImageCounter,l2,l3,imageSize);
 		this.setAlignment(Pos.CENTER);
 	}
 	
-	public void update(int newCount, int newSize)
+	public void update(int newCount, int newSelectedCount, long newSelectedSize)
 	{
-		counter = newCount;
-		sizeCounter = newSize;
+		count = newCount;
+		selectedCount = newSelectedCount;
+		size = newSelectedSize;
+		double sizeCounterD = newSelectedSize;
+		String unit = "B";
+		if(sizeCounterD > 1024)
+		{
+			sizeCounterD /= 1024;
+			unit = "KB";
+		}
+		if(sizeCounterD > 1024)
+		{
+			sizeCounterD /= 1024;
+			unit = "MB";
+		}
+		if(sizeCounterD > 1024)
+		{
+			sizeCounterD /= 1024;
+			unit = "GB";
+		}
+		double finalSizeCounterD = sizeCounterD;
+		String finalUnit = unit;
 		Platform.runLater(()->{
-			imageCounter.setText(Integer.toString(counter));
-			imageSizeCounter.setText(Long.toString(sizeCounter));
+			imageCounter.setText(String.valueOf(count));
+			selectedImageCounter.setText(String.valueOf(selectedCount));
+			imageSize.setText(String.format("%.2f %s", finalSizeCounterD, finalUnit));
 		});
 	}
 }

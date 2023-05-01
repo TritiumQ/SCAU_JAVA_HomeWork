@@ -7,9 +7,12 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+
+import java.io.IOException;
 
 
 public class ImageThumbnailPane extends BorderPane
@@ -53,31 +56,102 @@ public class ImageThumbnailPane extends BorderPane
 		
 		this.getStyleClass().add("image-thumbnail-pane");
 		this.setPadding(new Insets(3,3,3,3));
-		
-		
+	}
+	
+	public void setSize(double size)
+	{
+		this.setMaxSize(size+50, size+50);
+		this.setMinSize(size+50, size+50);
+		this.thumbnail.setFitHeight(size);
+		this.thumbnail.setFitWidth(size);
 	}
 	
 	private void actionInit()
 	{
-		this.setOnMouseClicked((MouseEvent event) -> {
-			if(isSelected)
+		this.setOnMouseClicked((MouseEvent event) -> {  //为了保证方法调用整洁, 不允许调用自身的setSelected()方法
+			if(event.getButton() == MouseButton.PRIMARY )
 			{
-				setSelected();
+				ImageFlowPane parent = this.getParent() instanceof ImageFlowPane ? (ImageFlowPane)this.getParent() : null;
+				if(event.getClickCount() == 1)
+				{
+					if(parent != null)
+					{
+						if(event.isShiftDown())    //shift多选
+						{
+							if(parent.getSelectedImage().size() == 0)
+							{
+								parent.addSelect(this);
+							}
+							else
+							{
+								int startIndex = parent.getChildren().indexOf(parent.getSelectedImage().get(parent.getSelectedImage().size()-1));
+								int endIndex = parent.getChildren().indexOf(this);
+								if(startIndex > endIndex)
+								{
+									int temp = startIndex;
+									startIndex = endIndex;
+									endIndex = temp;
+								}
+								parent.clearSelect();
+								for(int i = startIndex; i <= endIndex; i++)
+								{
+									parent.addSelect((ImageThumbnailPane)parent.getChildren().get(i));
+								}
+							}
+						}
+						else if(event.isControlDown())
+						{
+							if(isSelected)
+							{
+								parent.removeSelect(this);
+							}
+							else
+							{
+								parent.addSelect(this);
+							}
+						}
+						else
+						{
+							parent.clearSelect();
+							parent.addSelect(this);
+						}
+					}
+					else throw new RuntimeException("ImageThumbnailPane's parent is not ImageFlowPane");
+				}
+				else if(event.getClickCount() == 2)
+				{
+					if (parent != null) {
+						try {
+							parent.openAll(this.imageFile);
+						} catch (IOException e) {
+							throw new RuntimeException(e);
+						}
+					}
+				}
 			}
-			else
-			{
-				removeSelected();
-			}
+			
 		});
 	}
 	
-	private void removeSelected() {
-		this.setStyle("-fx-background-color: transparent;");
-		isSelected = true;
+	public void setSelected(boolean isSelected)
+	{
+		this.isSelected = isSelected;
+		if(isSelected)
+		{
+			this.setStyle("-fx-background-color: #c8eaf5");
+		}
+		else
+		{
+			this.setStyle("-fx-background-color: transparent");
+		}
 	}
 	
-	private void setSelected() {
-		this.setStyle("-fx-background-color: #c8eaf5");
-		isSelected = false;
+	public ImageFile getImageFile() {
+		return imageFile;
 	}
+	
+	public Image getThumbnail() {
+		return thumbnail.getImage();
+	}
+	
 }

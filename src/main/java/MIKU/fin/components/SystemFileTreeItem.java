@@ -1,11 +1,13 @@
 package MIKU.fin.components;
 
 
+import MIKU.fin.controllers.MainController;
 import MIKU.fin.utils.FileUtil;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 
 import java.io.File;
 import java.util.Objects;
