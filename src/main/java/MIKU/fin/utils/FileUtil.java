@@ -7,6 +7,8 @@ import javax.swing.Icon;
 import javax.swing.filechooser.FileSystemView;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Objects;
 
 /**
@@ -44,7 +46,10 @@ public class FileUtil
 	 * 图片查看器FXML文件路径
 	 */
 	public static String PATH_VIEWER_FXML = "/view/viewer-view.fxml";
-	
+	/**
+	 * 全屏查看器FXML文件路径
+	 */
+	public static String PATH_FULLSCREENVIEWER_FXML = "/view/slide-view.fxml";
 	/**
 	 * 获取文件在系统中的图标
 	 */
@@ -63,4 +68,49 @@ public class FileUtil
 	{
 		return FileSystemView.getFileSystemView().getSystemDisplayName(file);
 	}
+	
+	public static void copyFileToDirectory(File file, File currentDir) throws IOException
+	{
+		if(currentDir.exists())
+		{
+			File newFile = new File(currentDir.getAbsolutePath() + File.separator + file.getName());
+			//System.out.println(newFile.getAbsolutePath());
+			Files.copy(file.toPath(), newFile.toPath());
+		}
+	}
+	
+	public  static void copyFileToSameDirectory(File file, File currentDir) throws IOException
+	{
+		if(currentDir.exists())
+		{
+			String fileName = file.getName();
+			String type = fileName.substring(fileName.lastIndexOf("."));
+			fileName = fileName.substring(0, fileName.lastIndexOf("."));
+			int i = 1;
+			File newFile = new File(currentDir.getAbsolutePath() + File.separator + fileName + " (" + i + ")" + type);
+			while(newFile.exists())
+			{
+				newFile = new File(currentDir.getAbsolutePath() + File.separator + fileName + " (" + i +")" + type);
+				i++;
+			}
+			//System.out.println(newFile.getAbsolutePath());
+			Files.copy(file.toPath(), newFile.toPath());
+		}
+	}
+	
+	public static void renameFile(File file, String s) throws IOException
+	{
+		String fileName = file.getName();
+		String type = fileName.substring(fileName.lastIndexOf("."));
+		File newFile = new File(file.getParent() + File.separator + s + type);
+		Files.move(file.toPath(), newFile.toPath());
+	}
+	
+	public static String getImageName(Image image)
+	{
+		String name = image.getUrl();
+		name = name.substring(name.lastIndexOf("/") + 1);
+		return name;
+	}
+	
 }

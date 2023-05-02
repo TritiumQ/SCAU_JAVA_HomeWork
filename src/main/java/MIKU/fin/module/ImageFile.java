@@ -17,8 +17,8 @@ public class ImageFile
 		this.imageName = imageFile.getName();
 		this.imagePath = imageFile.getAbsolutePath();
 		this.imageUri = imageFile.toPath().toUri().toString();
-		System.out.println(imagePath);
-		System.out.println(imageUri);
+		//System.out.println(imagePath);
+		//System.out.println(imageUri);
 		
 	}
 	
@@ -28,8 +28,8 @@ public class ImageFile
 		this.imageName = imageFile.getName();
 		this.imagePath = imageFile.getAbsolutePath();
 		this.imageUri = imageFile.toPath().toUri().toString();
-		System.out.println(imagePath);
-		System.out.println(imageUri);
+		//System.out.println(imagePath);
+		//System.out.println(imageUri);
 	}
 	
 	public File getRawFile()

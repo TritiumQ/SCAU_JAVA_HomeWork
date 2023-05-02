@@ -142,10 +142,6 @@ public class ImageFlowPane extends FlowPane
 	public void openSelected(ImageFile current) throws IOException
 	{
 		if (selectedImage.size() == 0) return;
-//		else if (selectedImage.size() == 1)
-//		{
-//			openAll(current);
-//		}
 		else
 		{
 			Launcher.launchViewer();

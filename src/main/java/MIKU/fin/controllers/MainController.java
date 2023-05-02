@@ -1,8 +1,7 @@
 package MIKU.fin.controllers;
 
-import MIKU.fin.components.ImageFlowPane;
-import MIKU.fin.components.InformationPane;
-import MIKU.fin.components.SystemFileTreeItem;
+import MIKU.fin.components.*;
+import MIKU.fin.module.ImageFile;
 import MIKU.fin.utils.FileUtil;
 import MIKU.fin.utils.FontUtil;
 
@@ -11,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
@@ -52,7 +52,7 @@ public class MainController implements Initializable
 	@FXML
 	private Button btnBack;
 	@FXML
-	private Button btnLikeit, btnDelete, btnCut, btnCopy, btnPaste, btnRename, btnOpen, btnInf;
+	private Button btnLikeit, btnDelete, btnCut, btnCopy, btnPaste, btnRename, btnPlay, btnInf;
 	@FXML
 	private TextField searchBox, pathBox;
 	@FXML
@@ -77,10 +77,23 @@ public class MainController implements Initializable
 	private void initContextMenu()
 	{
 		MenuItem refresh = new MenuItem("刷新");
+		refresh.setOnAction(event -> {
+			imagePane.refresh();
+		});
 		
 		MenuItem like = new MenuItem("收藏");
+		like.setOnAction(event -> {
+			btnLikeitClick();
+		});
 		
 		MenuItem play = new MenuItem("播放幻灯片");
+		play.setOnAction(event -> {
+			try {
+				btnPlayClick();
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+		});
 		
 		MenuItem open = new MenuItem("打开选中");
 		open.setOnAction(event -> {
@@ -118,7 +131,7 @@ public class MainController implements Initializable
 		
 		MenuItem property = new MenuItem("属性");
 		property.setOnAction(event -> {
-			btnPropertyClick();
+			btnInfClick();
 		});
 		
 		imagePaneMenu = new ContextMenu();
@@ -130,7 +143,7 @@ public class MainController implements Initializable
 				rename, new SeparatorMenuItem(),
 				property);
 		
-		center.setOnContextMenuRequested(event -> {
+		imagePane.setOnContextMenuRequested(event -> {
 			imagePaneMenu.show(imagePane, event.getScreenX(), event.getScreenY());
 		});
 	}
@@ -159,7 +172,7 @@ public class MainController implements Initializable
 			}
 		});
 	}
-	
+	//TODO
 	private double x, y;
 	private double selectX, selectY;
 	
@@ -182,6 +195,7 @@ public class MainController implements Initializable
 				if(imagePane.equals(event.getPickResult().getIntersectedNode()))
 				{
 					imagePane.clearSelect();
+					imagePaneMenu.hide();
 				}
 			}
 		});
@@ -227,7 +241,6 @@ public class MainController implements Initializable
 						"*.jpg", "*.png", "*.bmp", "*.gif", "*.jpeg", ".webp")
 		);
 		var files = fileChooser.showOpenMultipleDialog(main.getScene().getWindow());
-		//TODO 打开图片
 		Launcher.launchViewer();
 		ViewerController.instance.setImage(files.toArray(new File[0]), 0);
 	}
@@ -239,27 +252,31 @@ public class MainController implements Initializable
 	}
 	
 	@FXML
-	public void about()
+	public void about() throws IOException
 	{
-		Stage aboutStage = new Stage();
-		VBox vBox = new VBox();
-		Label l1 = new Label("项目作者: TritiumQ");
-		l1.setFont(FontUtil.genFont(FontUtil.FONT_YAHEI, 15));
-		Label l2 = new Label("项目地址: ");
-		l2.setFont(FontUtil.genFont(FontUtil.FONT_YAHEI, 15));
-		Hyperlink hl = new Hyperlink("https://github.com/TritiumQ/SCAU_JAVA_HomeWork.git");
-		hl.setFont(FontUtil.genFont(FontUtil.FONT_YAHEI, 15));
-		vBox.getChildren().addAll(l1,l2,hl);
-		Scene scn = new Scene(vBox, 320, 120);
-		aboutStage.setScene(scn);
-		aboutStage.setTitle("关于");
-		aboutStage.show();
+//		Stage aboutStage = new Stage();
+//		VBox vBox = new VBox();
+//		Label l1 = new Label("项目作者: TritiumQ");
+//		l1.setFont(FontUtil.genFont(FontUtil.FONT_YAHEI, 15));
+//		Label l2 = new Label("项目地址: ");
+//		l2.setFont(FontUtil.genFont(FontUtil.FONT_YAHEI, 15));
+//		Hyperlink hl = new Hyperlink("https://github.com/TritiumQ/SCAU_JAVA_HomeWork.git");
+//		hl.setFont(FontUtil.genFont(FontUtil.FONT_YAHEI, 15));
+//		vBox.getChildren().addAll(l1,l2,hl);
+//		Scene scn = new Scene(vBox, 320, 120);
+//		aboutStage.setScene(scn);
+//		aboutStage.setTitle("关于");
+//		aboutStage.show();
+		Launcher.launchSlide();
+		SlideController.instance.play();
+		
 	}
 	
 	@FXML
 	public void btnDirClick()
 	{
 		main.setLeft(leftPane);
+		//TODO 主目录
 	}
 	
 	@FXML
@@ -292,6 +309,8 @@ public class MainController implements Initializable
 			alert.setTitle("删除");
 			alert.setHeaderText("删除文件");
 			alert.setContentText("是否删除选中的文件?");
+			Stage dlg = (Stage)alert.getDialogPane().getScene().getWindow();
+			dlg.getIcons().add(new Image(getClass().getResource(FileUtil.PATH_MAIN_ICON).toExternalForm()));
 			Optional<ButtonType> result = alert.showAndWait();
 			if(result.get() == ButtonType.OK)
 			{
@@ -305,11 +324,11 @@ public class MainController implements Initializable
 				{
 					if(file.delete())
 					{
-						System.out.println("删除成功");
+						System.out.println(file.toPath()+" 删除成功");
 					}
 					else
 					{
-						System.out.println("删除失败");
+						System.out.println(file.toPath()+" 删除失败");
 					}
 				}
 				imagePane.refresh();
@@ -317,40 +336,180 @@ public class MainController implements Initializable
 		}
 	}
 	
+	private File operateDir = null;
+	private List<File> prepareToCut = new ArrayList<>();
+	private List<File> prepareToCopy = new ArrayList<>();
 	@FXML
 	public void btnCutClick()
 	{
-	
+		if(imagePane.getSelectedImage().size() == 0) return;
+		else
+		{
+			prepareToCopy.clear();
+			prepareToCut.clear();
+			operateDir = imagePane.getCurrentDir();
+			for(var img : imagePane.getSelectedImage())
+			{
+				prepareToCut.add(img.getImageFile().getRawFile());
+			}
+			//imagePane.clearSelect();
+		}
 	}
 	
 	@FXML
 	public void btnCopyClick()
 	{
-	
+		if(imagePane.getSelectedImage().size() == 0) return;
+		else
+		{
+			prepareToCut.clear();
+			prepareToCopy.clear();
+			operateDir = imagePane.getCurrentDir();
+			for(var img : imagePane.getSelectedImage())
+			{
+				prepareToCopy.add(img.getImageFile().getRawFile());
+			}
+			//imagePane.clearSelect();
+		}
 	}
 	
 	@FXML
 	public void btnPasteClick()
 	{
-	
+		try
+		{
+			if(prepareToCut.size() != 0)
+			{
+				if (!imagePane.getCurrentDir().equals(operateDir))
+				{
+					for(var file : prepareToCopy)
+					{
+						FileUtil.copyFileToDirectory(file, imagePane.getCurrentDir());
+					}
+					for (var file : prepareToCut)
+					{
+						file.delete();
+					}
+				}
+				prepareToCut.clear();
+				operateDir = null;
+				imagePane.refresh();
+			}
+			else if(prepareToCopy.size() != 0)
+			{
+				if (imagePane.getCurrentDir().equals(operateDir))
+				{
+					for(var file : prepareToCopy)
+					{
+						FileUtil.copyFileToSameDirectory(file, imagePane.getCurrentDir());
+					}
+				}
+				else
+				{
+					for(var file : prepareToCopy)
+					{
+						FileUtil.copyFileToDirectory(file, imagePane.getCurrentDir());
+					}
+				}
+				imagePane.refresh();
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	@FXML
 	public void btnRenameClick()
 	{
-	
+		try
+		{
+			if(imagePane.getSelectedImage().size() == 0) return;
+			else if(imagePane.getSelectedImage().size() == 1)
+			{
+				TextInputDialog dialog = new TextInputDialog();
+				dialog.setTitle("重命名");
+				dialog.setHeaderText("重命名");
+				dialog.setContentText("请输入新的文件名:");
+				Stage dlg = (Stage)dialog.getDialogPane().getScene().getWindow();
+				dlg.getIcons().add(new Image(getClass().getResource(FileUtil.PATH_MAIN_ICON).toExternalForm()));
+				Optional<String> result = dialog.showAndWait();
+				if(result.isPresent())
+				{
+					for(var img : imagePane.getSelectedImage())
+					{
+						FileUtil.renameFile(img.getImageFile().getRawFile(), result.get());
+					}
+					imagePane.refresh();
+				}
+			}
+			else
+			{
+				MultipleTextInputDialog dialog = new MultipleTextInputDialog(3,new String[]{"请输入文件名前缀:","请输入文件编号位数:","请输入文件编号起始值:"});
+				dialog.setTitle("重命名");
+				dialog.setHeaderText("批量重命名");
+				Stage dlg = (Stage)dialog.getDialogPane().getScene().getWindow();
+				dlg.getIcons().add(new Image(getClass().getResource(FileUtil.PATH_MAIN_ICON).toExternalForm()));
+				Optional<String[]> result = dialog.showAndWait();
+				System.out.println(result.isPresent());
+				if(result.isPresent())
+				{
+					String prefix = result.get()[0];
+					int num = Integer.parseInt(result.get()[1]);
+					int start = Integer.parseInt(result.get()[2]);
+					System.out.println(prefix+" "+num+" "+start);
+					for(var img : imagePane.getSelectedImage())
+					{
+						FileUtil.renameFile(img.getImageFile().getRawFile(), String.format("%s-%0"+num+"d",prefix,start++));
+					}
+					imagePane.refresh();
+				}
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	@FXML
-	public void btnPropertyClick()
+	public void btnInfClick()
 	{
 		//TODO 打开属性窗口
 	}
 	
 	@FXML
-	public void btnPlayClick()
+	public void btnPlayClick() throws IOException
 	{
-	
+		
+		MultipleTextInputDialog dialog = new MultipleTextInputDialog(2, new String[]{"时间间隔", "循环次数(0为无限循环)"});
+		dialog.setTitle("设置播放");
+		dialog.setHeaderText("播放设置");
+		Optional<String[]> result = dialog.showAndWait();
+		if(result.isPresent())
+		{
+			double timeGap = Double.parseDouble(result.get()[0]);
+			int cycleCount = Integer.parseInt(result.get()[1]);
+			Launcher.launchSlide();
+			List<ImageFile> list = new ArrayList<>();
+			if(imagePane.getSelectedImage().size() == 0)
+			{
+				imagePane.getChildren().forEach((node) -> {
+					list.add(((ImageThumbnailPane)node).getImageFile());
+				});
+			}
+			else
+			{
+				for(var img : imagePane.getSelectedImage())
+				{
+					list.add(img.getImageFile());
+				}
+			}
+			SlideController.instance.setImageList(list.toArray(new ImageFile[0]), 0);
+			SlideController.instance.setup(timeGap, cycleCount);
+		}
+		
 	}
 	
 	@FXML

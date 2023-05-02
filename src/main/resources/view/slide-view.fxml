@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="480.0" minWidth="640.0" prefHeight="800.0" prefWidth="1280.0" stylesheets="@../css/ManagerStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MIKU.fin.controllers.SlideController">
+   <children>
+      <BorderPane prefHeight="800.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+            <AnchorPane prefHeight="750.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
+               <children>
+                  <StackPane fx:id="pane" prefHeight="749.6" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
+            </AnchorPane>
+         </center>
+         <bottom>
+            <AnchorPane minHeight="50.0" prefHeight="50.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox alignment="CENTER" minHeight="50.0" prefHeight="50.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Button fx:id="btnPlayOrStop" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onPlayOrStop" prefHeight="45.0" prefWidth="45.0" textAlignment="CENTER">
+                           <graphic>
+                              <ImageView fitHeight="35.0" fitWidth="35.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../Icon/Grey/play-circle.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                           <tooltip>
+                              <Tooltip text="返回" />
+                           </tooltip>
+                        </Button>
+                        <Button fx:id="btnFullScreen" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onFullScreen" prefHeight="45.0" prefWidth="45.0" textAlignment="CENTER">
+                           <graphic>
+                              <ImageView fitHeight="35.0" fitWidth="35.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../Icon/Grey/fullscreen.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                           <tooltip>
+                              <Tooltip text="返回" />
+                           </tooltip>
+                        </Button>
+                        <Button fx:id="btnSetup" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onSetup" prefHeight="45.0" prefWidth="45.0" textAlignment="CENTER">
+                           <graphic>
+                              <ImageView fitHeight="35.0" fitWidth="35.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../Icon/Grey/dashboard.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                           <tooltip>
+                              <Tooltip text="返回" />
+                           </tooltip>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </AnchorPane>
+         </bottom>
+      </BorderPane>
+   </children>
+</AnchorPane>

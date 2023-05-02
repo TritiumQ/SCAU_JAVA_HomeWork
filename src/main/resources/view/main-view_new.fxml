@@ -172,7 +172,7 @@
                      <children>
                         <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="50.0" prefWidth="1000.0">
                           <items>
-                              <Button fx:id="btnInf" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" textAlignment="CENTER">
+                              <Button fx:id="btnInf" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#btnInfClick" prefHeight="40.0" prefWidth="40.0" textAlignment="CENTER">
                                  <graphic>
                                     <ImageView fitHeight="30.0" fitWidth="30.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -188,7 +188,7 @@
                                  </tooltip>
                               </Button>
                               <Separator orientation="VERTICAL" prefHeight="40.0" />
-                              <Button fx:id="btnRename" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" textAlignment="CENTER">
+                              <Button fx:id="btnRename" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#btnRenameClick" prefHeight="40.0" prefWidth="40.0" textAlignment="CENTER">
                                  <graphic>
                                     <ImageView fitHeight="30.0" fitWidth="30.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -203,7 +203,7 @@
                                     <Tooltip text="重命名" />
                                  </tooltip>
                               </Button>
-                              <Button fx:id="btnPaste" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" textAlignment="CENTER">
+                              <Button fx:id="btnPaste" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#btnPasteClick" prefHeight="40.0" prefWidth="40.0" textAlignment="CENTER">
                                  <graphic>
                                     <ImageView fitHeight="30.0" fitWidth="30.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -218,7 +218,7 @@
                                     <Tooltip text="粘贴" />
                                  </tooltip>
                               </Button>
-                              <Button fx:id="btnCopy" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" textAlignment="CENTER">
+                              <Button fx:id="btnCopy" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#btnCopyClick" prefHeight="40.0" prefWidth="40.0" textAlignment="CENTER">
                                  <graphic>
                                     <ImageView fitHeight="30.0" fitWidth="30.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -233,7 +233,7 @@
                                     <Tooltip text="复制" />
                                  </tooltip>
                               </Button>
-                              <Button fx:id="btnCut" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" textAlignment="CENTER">
+                              <Button fx:id="btnCut" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#btnCutClick" prefHeight="40.0" prefWidth="40.0" textAlignment="CENTER">
                                  <graphic>
                                     <ImageView fitHeight="30.0" fitWidth="30.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -248,7 +248,7 @@
                                     <Tooltip text="剪切" />
                                  </tooltip>
                               </Button>
-                              <Button fx:id="btnDelete" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" textAlignment="CENTER">
+                              <Button fx:id="btnDelete" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#btnDeleteClick" prefHeight="40.0" prefWidth="40.0" textAlignment="CENTER">
                                  <graphic>
                                     <ImageView fitHeight="30.0" fitWidth="30.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -263,7 +263,7 @@
                                     <Tooltip text="删除" />
                                  </tooltip>
                               </Button>
-                              <Button fx:id="btnOpen" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" textAlignment="CENTER">
+                              <Button fx:id="btnPlay" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#btnPlayClick" prefHeight="40.0" prefWidth="40.0" textAlignment="CENTER">
                                  <graphic>
                                     <ImageView fitHeight="30.0" fitWidth="30.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -278,7 +278,7 @@
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </padding>
                               </Button>
-                              <Button fx:id="btnLikeit" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" textAlignment="CENTER">
+                              <Button fx:id="btnLikeit" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#btnLikeitClick" prefHeight="40.0" prefWidth="40.0" textAlignment="CENTER">
                                  <graphic>
                                     <ImageView fitHeight="30.0" fitWidth="30.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                                        <image>
