@@ -1,18 +1,24 @@
 package MIKU.fin.controllers;
 
+import MIKU.fin.Launcher;
 import MIKU.fin.components.*;
 import MIKU.fin.module.ImageFile;
+import MIKU.fin.utils.FavoritesUtils;
 import MIKU.fin.utils.FileUtil;
 import MIKU.fin.utils.FontUtil;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -37,6 +43,7 @@ public class MainController implements Initializable
 	private BorderPane main;
 	@FXML
 	private ScrollPane center;
+	private AnchorPane centerPane;
 	@FXML
 	private HBox bottom;
 	private InformationPane informationPane;
@@ -57,7 +64,10 @@ public class MainController implements Initializable
 	private TextField searchBox, pathBox;
 	@FXML
 	private Slider zoom;
+	@FXML
+	private ComboBox<String> sortMethod,sortOrder;
 	
+	private boolean isDir;
 	
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle)
@@ -68,10 +78,32 @@ public class MainController implements Initializable
 		bottom.getChildren().add(informationPane);
 		bottom.getChildren().get(0).toFront();
 		
+		isDir = true;
+		
 		initZoom();
 		initFileTree();
 		initImagePane();
 		initContextMenu();
+		initChoiceMenu();
+	}
+	
+	private void initChoiceMenu()
+	{
+		sortMethod.setItems(FXCollections.observableArrayList("名称排序", "大小排序", "日期排序"));
+		sortMethod.getSelectionModel().select(0);
+		
+		sortOrder.setItems(FXCollections.observableArrayList("升序", "降序"));
+		sortOrder.getSelectionModel().select(0);
+		
+		imagePane.setSort(0, 0);
+		
+		sortMethod.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
+			imagePane.setSort(sortMethod.getSelectionModel().getSelectedIndex(), sortOrder.getSelectionModel().getSelectedIndex());
+		});
+		sortOrder.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
+			imagePane.setSort(sortMethod.getSelectionModel().getSelectedIndex(),sortOrder.getSelectionModel().getSelectedIndex());
+		});
+		
 	}
 	
 	private void initContextMenu()
@@ -83,7 +115,7 @@ public class MainController implements Initializable
 		
 		MenuItem like = new MenuItem("收藏");
 		like.setOnAction(event -> {
-			btnLikeitClick();
+			btnLikeClick();
 		});
 		
 		MenuItem play = new MenuItem("播放幻灯片");
@@ -150,12 +182,12 @@ public class MainController implements Initializable
 	
 	private void initZoom()
 	{
-		zoom.setMin(50);
-		zoom.setMax(250);
+		zoom.setMin(100);
+		zoom.setMax(300);
 		zoom.setBlockIncrement(10);
 		zoom.valueProperty().addListener((observable, oldValue, newValue) -> {
 			Platform.runLater(()->{
-				imagePane.update(newValue.doubleValue());
+				imagePane.setSize(newValue.doubleValue());
 			});
 		});
 	}
@@ -172,44 +204,92 @@ public class MainController implements Initializable
 			}
 		});
 	}
-	//TODO
-	private double x, y;
 	private double selectX, selectY;
-	
+	Rectangle selectArea;
 	private void initImagePane()
 	{
-		imagePane = new ImageFlowPane(null);
-		center.setContent(imagePane);
-		center.setFitToWidth(true);
-		center.heightProperty().addListener((observable, oldValue, newValue) -> {
-			if(imagePane.getHeight() < newValue.doubleValue())
-			{
-				imagePane.setPrefHeight(newValue.doubleValue());
-			}
-		});
-		setPath("E:\\Pictures");
+		selectArea = new Rectangle();
+		selectArea.setFill(Color.rgb(0, 0, 0, 0.1));
+		selectArea.setVisible(false);
 		
-		imagePane.setOnMouseClicked(event -> {
+		imagePane = new ImageFlowPane(null);
+		
+		imagePane.setOnMousePressed(event -> {
+			selectX = event.getX();
+			selectY = event.getY();
+			imagePaneMenu.hide();
 			if(event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1 && !event.isControlDown())
 			{
 				if(imagePane.equals(event.getPickResult().getIntersectedNode()))
 				{
 					imagePane.clearSelect();
-					imagePaneMenu.hide();
 				}
 			}
 		});
+		imagePane.setOnMouseDragged(event -> {
+			double finalX = Math.min(selectX, event.getX());
+			double finalY = Math.min(selectY, event.getY());
+			double finalWidth = Math.abs(event.getX() - selectX);
+			double finalHeight = Math.abs(event.getY() - selectY);
+			selectArea.setX(finalX);
+			selectArea.setY(finalY);
+			selectArea.setWidth(finalWidth);
+			selectArea.setHeight(finalHeight);
+			selectArea.setVisible(true);
+			
+			areaSelect();
+			
+			if(event.getScreenY() < 100)
+			{
+				center.setVvalue(center.getVvalue() + (event.getSceneY() - 100) / imagePane.getHeight() / 10);
+			}
+			if(event.getScreenY() > 80 + center.getHeight())
+			{
+				center.setVvalue(center.getVvalue() + (event.getSceneY() - center.getHeight() - 80) / imagePane.getHeight() / 10);
+			}
+			
+		});
+		imagePane.setOnMouseReleased(event -> {
+			selectArea.setVisible(false);
+		});
+		
+		
+		centerPane = new AnchorPane();
+		centerPane.getChildren().addAll(imagePane,selectArea);
+		
+		center.setContent(centerPane);
+		center.setFitToWidth(true);
+		center.heightProperty().addListener((observable, oldValue, newValue) -> {
+			imagePane.setPrefHeight(newValue.doubleValue());
+		});
+		center.widthProperty().addListener((observable, oldValue, newValue) -> {
+			imagePane.setPrefWidth(newValue.doubleValue());
+		});
+		
+		//setPath("E:\\Pictures\\Pic");
+		
+	}
+	
+	private void areaSelect()
+	{
+		imagePane.clearSelect();
+		for (var pane: imagePane.getChildren()) {
+			if(selectArea.intersects(pane.getBoundsInParent()))
+			{
+				imagePane.addSelect((ImageThumbnailPane) pane);
+			}
+		}
 	}
 	
 	public void setPath(String path)
 	{
-		imagePane.update(new File(path), zoom.getValue());
+		imagePane.setDir(new File(path), zoom.getValue());
 		pathBox.setText(path);
 	}
 	
-	public void setImageInf(int count, int selectedCounter, long selectSize)
+	public void setImageInf(int count, long size, int selectedCounter, long selectSize)
 	{
-		informationPane.update(count, selectedCounter, selectSize);
+		informationPane.update(count, size ,selectedCounter, selectSize);
 	}
 	
 	@FXML
@@ -217,16 +297,29 @@ public class MainController implements Initializable
 	{
 		if(!pathBox.getText().equals(""))
 		{
-			setPath(pathBox.getText());
+			File f = new File(pathBox.getText());
+			if(f.exists() && f.isDirectory())
+			{
+				imagePane.setDir(f, zoom.getValue());
+			}
 		}
 	}
-	
 	@FXML
 	private void serach()
 	{
-		if(!searchBox.getText().equals(""))
+		String text = searchBox.getText();
+		if(!text.equals(""))
 		{
-			//TODO 搜索
+			for (var pane: imagePane.getChildren()) {
+				//System.out.println(((ImageThumbnailPane)pane).getImageFile().getImageName());
+				if(((ImageThumbnailPane)pane).getImageFile().getImageName().contains(text))
+				{
+					imagePane.clearSelect();
+					imagePane.addSelect((ImageThumbnailPane) pane);
+					center.setVvalue(((ImageThumbnailPane) pane).getLayoutY() / imagePane.getHeight());
+					return;
+				}
+			}
 		}
 	}
 	
@@ -236,13 +329,16 @@ public class MainController implements Initializable
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("选择图片");
 		fileChooser.getExtensionFilters().addAll(
-				new FileChooser.ExtensionFilter("所有图片文件", "*.*"),
+				//new FileChooser.ExtensionFilter("所有图片文件", "*.*"),
 				new FileChooser.ExtensionFilter("图片文件",
 						"*.jpg", "*.png", "*.bmp", "*.gif", "*.jpeg", ".webp")
 		);
 		var files = fileChooser.showOpenMultipleDialog(main.getScene().getWindow());
-		Launcher.launchViewer();
-		ViewerController.instance.setImage(files.toArray(new File[0]), 0);
+		if(files!=null)
+		{
+			Launcher.launchViewer();
+			ViewerController.instance.setImage(files.toArray(new File[0]), 0);
+		}
 	}
 	
 	@FXML
@@ -254,50 +350,100 @@ public class MainController implements Initializable
 	@FXML
 	public void about() throws IOException
 	{
-//		Stage aboutStage = new Stage();
-//		VBox vBox = new VBox();
-//		Label l1 = new Label("项目作者: TritiumQ");
-//		l1.setFont(FontUtil.genFont(FontUtil.FONT_YAHEI, 15));
-//		Label l2 = new Label("项目地址: ");
-//		l2.setFont(FontUtil.genFont(FontUtil.FONT_YAHEI, 15));
-//		Hyperlink hl = new Hyperlink("https://github.com/TritiumQ/SCAU_JAVA_HomeWork.git");
-//		hl.setFont(FontUtil.genFont(FontUtil.FONT_YAHEI, 15));
-//		vBox.getChildren().addAll(l1,l2,hl);
-//		Scene scn = new Scene(vBox, 320, 120);
-//		aboutStage.setScene(scn);
-//		aboutStage.setTitle("关于");
-//		aboutStage.show();
-		Launcher.launchSlide();
-		SlideController.instance.play();
-		
+		Stage aboutStage = new Stage();
+		VBox vBox = new VBox();
+		Label l1 = new Label("项目作者: TritiumQ");
+		l1.setFont(FontUtil.genFont(FontUtil.FONT_YAHEI, 15));
+		Label l2 = new Label("项目地址: ");
+		l2.setFont(FontUtil.genFont(FontUtil.FONT_YAHEI, 15));
+		Hyperlink hl = new Hyperlink("https://github.com/TritiumQ/SCAU_JAVA_HomeWork.git");
+		hl.setFont(FontUtil.genFont(FontUtil.FONT_YAHEI, 15));
+		vBox.getChildren().addAll(l1,l2,hl);
+		Scene scn = new Scene(vBox, 320, 120);
+		aboutStage.setScene(scn);
+		aboutStage.setTitle("关于");
+		aboutStage.show();
 	}
-	
+	private String currentPath = "";
 	@FXML
 	public void btnDirClick()
 	{
+		isDir = true;
 		main.setLeft(leftPane);
-		//TODO 主目录
+		if(!currentPath.equals(""))
+		{
+			setPath(currentPath);
+		}
+		else
+		{
+			setPath("C:\\");
+		}
+		((ImageView)btnDir.getGraphic()).setImage(
+				new Image(getClass().getResource("/Icon/Grey/folder-open-fill.png").toExternalForm())
+		);
+		((ImageView)btnFavorites.getGraphic()).setImage(
+				new Image(getClass().getResource("/Icon/Grey/book.png").toExternalForm())
+		);
 	}
 	
 	@FXML
-	public void btnFavoritesClick()
+	public void btnFavoritesClick() throws IOException, ClassNotFoundException
 	{
+		isDir = false;
+		currentPath = pathBox.getText();
+		pathBox.setText("图片收藏夹");
 		main.setLeft(null);
-		//TODO 收藏夹
+		imagePane.setFavorites(zoom.getValue());
+		((ImageView)btnDir.getGraphic()).setImage(
+				new Image(getClass().getResource("/Icon/Grey/folder.png").toExternalForm())
+		);
+		((ImageView)btnFavorites.getGraphic()).setImage(
+				new Image(getClass().getResource("/Icon/Grey/book-fill.png").toExternalForm())
+		);
+		
 	}
 	
 	@FXML
 	public void btnBackClick()
 	{
-		setPath(new File(pathBox.getText()).getParent());
+		File f = new File(pathBox.getText());
+		if(f.getParent() != null && !isDir)
+		{
+			setPath(f.getParent());
+		}
 	}
 	
 	
 	@FXML
-	public void btnLikeitClick()
+	public void btnLikeClick()
 	{
-		//TODO 收藏
+		if(imagePane.getSelectedImage().size() != 0)
+		{
+			List<ImageFile> list = new ArrayList<>();
+			for(var img : imagePane.getSelectedImage())
+			{
+				list.add(img.getImageFile());
+			}
+			FavoritesUtils.addFavorites(list.toArray(new ImageFile[0]));
+			if(!isDir) imagePane.refresh();
+		}
 	}
+	
+	@FXML
+	public void btnCancelLikeClick()
+	{
+		if (imagePane.getSelectedImage().size() != 0)
+		{
+			List<ImageFile> list = new ArrayList<>();
+			for(var img : imagePane.getSelectedImage())
+			{
+				list.add(img.getImageFile());
+			}
+			FavoritesUtils.removeFavorites(list.toArray(new ImageFile[0]));
+			if(!isDir) imagePane.refresh();
+		}
+	}
+	
 	
 	@FXML
 	public void btnDeleteClick()
@@ -476,7 +622,13 @@ public class MainController implements Initializable
 	@FXML
 	public void btnInfClick()
 	{
-		//TODO 打开属性窗口
+		if(imagePane.getSelectedImage().size() > 0)
+		{
+			ImageInfomationDialog infDlg = new ImageInfomationDialog(imagePane.getSelectedImage().get(0).getImageFile());
+			Stage dlg = (Stage)infDlg.getDialogPane().getScene().getWindow();
+			dlg.getIcons().add(new Image(getClass().getResource(FileUtil.PATH_MAIN_ICON).toExternalForm()));
+			infDlg.show();
+		}
 	}
 	
 	@FXML
@@ -489,6 +641,7 @@ public class MainController implements Initializable
 		Optional<String[]> result = dialog.showAndWait();
 		if(result.isPresent())
 		{
+			if(result.get()[0].isEmpty() || result.get()[1].isEmpty()) return;
 			double timeGap = Double.parseDouble(result.get()[0]);
 			int cycleCount = Integer.parseInt(result.get()[1]);
 			Launcher.launchSlide();

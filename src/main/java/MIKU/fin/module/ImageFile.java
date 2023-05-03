@@ -4,6 +4,10 @@ import javafx.scene.image.Image;
 
 import java.io.File;
 
+/**
+ * 图片文件类, 用于存储图片文件的信息，作为文件对象和图片对象的中间层
+ * @author TritiumQ
+ */
 public class ImageFile
 {
 	private final File imageFile;
@@ -32,6 +36,10 @@ public class ImageFile
 		//System.out.println(imageUri);
 	}
 	
+	/**
+	 * 获取图片原始文件对象
+	 * @return
+	 */
 	public File getRawFile()
 	{
 		return imageFile;
@@ -55,11 +63,19 @@ public class ImageFile
 		return imageUri;
 	}
 	
+	/**
+	 * 获取图片文件名
+	 * @return
+	 */
 	public String getImageName()
 	{
 		return imageName;
 	}
 	
+	/**
+	 * 生成图片对象
+	 * @return
+	 */
 	public Image genImage()
 	{
 		return new Image(getImageUri());

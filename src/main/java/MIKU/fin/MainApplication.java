@@ -12,27 +12,17 @@ import java.util.Objects;
 
 public class MainApplication extends Application
 {
-	private Stage mainStage;
-	private Stage viewerStage;
-	
-	@Override
-	public void init() throws Exception
-	{
-	
-	}
 	@Override
 	public void start(Stage stage) throws Exception
 	{
 		FXMLLoader loader = new FXMLLoader(getClass().getResource(FileUtil.PATH_MAIN_FXML));
 		Scene scn = new Scene(loader.load());
-		
-		mainStage = stage;
-		mainStage.setMinWidth(640);
-		mainStage.setMinHeight(480);
-		mainStage.setScene(scn);
-		mainStage.setTitle(Resource.PROGRAM_NAME);
-		mainStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResource(FileUtil.PATH_MAIN_ICON)).toExternalForm()));
-		mainStage.show();
+		stage.setMinWidth(640);
+		stage.setMinHeight(480);
+		stage.setScene(scn);
+		stage.setTitle(Resource.PROGRAM_NAME);
+		stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResource(FileUtil.PATH_MAIN_ICON)).toExternalForm()));
+		stage.show();
 	}
 	
 	public static void main(String[] args)

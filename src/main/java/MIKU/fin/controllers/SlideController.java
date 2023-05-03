@@ -2,9 +2,11 @@ package MIKU.fin.controllers;
 
 import MIKU.fin.components.MultipleTextInputDialog;
 import MIKU.fin.module.ImageFile;
+import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -70,6 +72,32 @@ public class SlideController implements Initializable
 		currentImage.setImage(null);
 		
 		setup(1, 1);
+		
+		pane.setOnKeyPressed(e -> {
+			switch (e.getCode()) {
+				case ESCAPE-> {
+					//System.out.println("退出");
+					Platform.exit();
+				}
+				case SPACE -> {
+					if (timeline.getStatus() == Animation.Status.PAUSED) {
+						timeline.play();
+					} else {
+						timeline.pause();
+					}
+				}
+			}
+		});
+	}
+	
+	
+	private void updateImage()
+	{
+		if(currentImage.getImage() != null)
+		{
+			currentImage.fitWidthProperty().bind(pane.widthProperty());
+			currentImage.fitHeightProperty().bind(pane.heightProperty());
+		}
 	}
 	
 	@FXML
@@ -95,6 +123,7 @@ public class SlideController implements Initializable
 		Optional<String[]> result = dialog.showAndWait();
 		if(result.isPresent())
 		{
+			if(result.get()[0].isEmpty() || result.get()[1].isEmpty()) return;
 			double timeGap = Double.parseDouble(result.get()[0]);
 			int cycleCount = Integer.parseInt(result.get()[1]);
 			setup(timeGap, cycleCount);
@@ -104,21 +133,24 @@ public class SlideController implements Initializable
 	@FXML
 	public void onFullScreen()
 	{
-		boolean isFullScreen = ((Stage) pane.getScene().getWindow()).isFullScreen();
-		if(isFullScreen)
-		{
-			((ImageView)btnFullScreen.getGraphic()).setImage(new Image(getClass().getResource("/Icon/Grey/fullscreen.png").toExternalForm()));
-		}
-		else
-		{
-			((ImageView)btnFullScreen.getGraphic()).setImage(new Image(getClass().getResource("/Icon/Grey/fullscreen-exit.png").toExternalForm()));
-		}
-		((Stage) pane.getScene().getWindow()).setFullScreen(!isFullScreen);
+//		boolean isFullScreen = ((Stage) pane.getScene().getWindow()).isFullScreen();
+//		if(isFullScreen)
+//		{
+//			((ImageView)btnFullScreen.getGraphic()).setImage(new Image(getClass().getResource("/Icon/Grey/fullscreen.png").toExternalForm()));
+//		}
+//		else
+//		{
+//			((ImageView)btnFullScreen.getGraphic()).setImage(new Image(getClass().getResource("/Icon/Grey/fullscreen-exit.png").toExternalForm()));
+//		}
+//		((Stage) pane.getScene().getWindow()).setFullScreen(!isFullScreen);
+//		updateImage();
+		((Stage) pane.getScene().getWindow()).close();
 	}
 	
 	public void refresh(int idx)
 	{
 		currentImage.setImage(imageList.get(idx));
+		updateImage();
 	}
 	public void setImageList(File[] imageFiles, int idx)
 	{
@@ -134,6 +166,7 @@ public class SlideController implements Initializable
 	{
 		imageList.clear();
 		imageList.addAll(Arrays.asList(imageFiles));
+		refresh(idx);
 	}
 	
 	public void setImageList(ImageFile[] imageFiles, int idx)
@@ -179,9 +212,10 @@ public class SlideController implements Initializable
 			int finalI = i;
 			timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(timeGap * i), event -> {
 				fadeOut.play();
-				currentImage.setOpacity(0);
 				currentIdx = finalI;
 				currentImage.setImage(imageList.get(finalI));
+				currentImage.setOpacity(0);
+				updateImage();
 				fadeIn.play();
 			}));
 		}

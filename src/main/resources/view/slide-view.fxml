@@ -25,11 +25,11 @@
                <children>
                   <HBox alignment="CENTER" minHeight="50.0" prefHeight="50.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Button fx:id="btnPlayOrStop" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onPlayOrStop" prefHeight="45.0" prefWidth="45.0" textAlignment="CENTER">
+                        <Button fx:id="btnFullScreen" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onFullScreen" prefHeight="45.0" prefWidth="45.0" textAlignment="CENTER">
                            <graphic>
                               <ImageView fitHeight="35.0" fitWidth="35.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../Icon/Grey/play-circle.png" />
+                                    <Image url="@../Icon/Grey/poweroff.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -40,11 +40,11 @@
                               <Tooltip text="返回" />
                            </tooltip>
                         </Button>
-                        <Button fx:id="btnFullScreen" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onFullScreen" prefHeight="45.0" prefWidth="45.0" textAlignment="CENTER">
+                        <Button fx:id="btnPlayOrStop" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onPlayOrStop" prefHeight="45.0" prefWidth="45.0" textAlignment="CENTER">
                            <graphic>
                               <ImageView fitHeight="35.0" fitWidth="35.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../Icon/Grey/fullscreen.png" />
+                                    <Image url="@../Icon/Grey/play-circle.png" />
                                  </image>
                               </ImageView>
                            </graphic>

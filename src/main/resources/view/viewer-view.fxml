@@ -10,14 +10,34 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="480.0" minWidth="640.0" prefHeight="800.0" prefWidth="1280.0" stylesheets="@../css/ManagerStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MIKU.fin.controllers.ViewerController">
    <children>
       <BorderPane prefHeight="800.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <top>
+         <center>
+            <AnchorPane prefHeight="660.0" prefWidth="1000.0" style="-fx-background-color: eaeaea;" BorderPane.alignment="CENTER">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="749.6" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <StackPane fx:id="imageBox" prefHeight="749.6" prefWidth="1280.0" style="-fx-border-color: BLACK];">
+                           <children>
+                              <ImageView fx:id="currentImage" onMouseDragged="#onMouseDragged" onMousePressed="#onMousePressed" onMouseReleased="#onMouseReleased" onScroll="#scrollResize" pickOnBounds="true" preserveRatio="true">
+                                 <cursor>
+                                    <Cursor fx:constant="OPEN_HAND" />
+                                 </cursor>
+                              </ImageView>
+                           </children>
+                        </StackPane>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+         </center>
+         <bottom>
             <AnchorPane prefHeight="50.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
                <children>
-                  <HBox alignment="CENTER" layoutX="433.0" layoutY="-8.0" maxHeight="58.0" maxWidth="1280.0" minHeight="50.0" minWidth="847.0" prefHeight="50.4" prefWidth="1280.0" styleClass="header_bar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <HBox alignment="CENTER" maxHeight="58.0" maxWidth="1280.0" minHeight="50.0" minWidth="847.0" prefHeight="50.4" prefWidth="1280.0" styleClass="header_bar">
                      <children>
                         <Button fx:id="btnBack" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#toPrevious" prefHeight="50.0" prefWidth="50.0" textAlignment="CENTER">
                            <graphic>
@@ -49,7 +69,7 @@
                               <Tooltip text="下一张" />
                            </tooltip>
                         </Button>
-                        <Button fx:id="btnZoomOut" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#zoomOut" prefHeight="45.0" prefWidth="45.0" textAlignment="CENTER">
+                        <Button fx:id="btnZoomOut" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#zoomIn" prefHeight="45.0" prefWidth="45.0" textAlignment="CENTER">
                            <graphic>
                               <ImageView fitHeight="35.0" fitWidth="35.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -64,7 +84,7 @@
                               <Tooltip text="放大" />
                            </tooltip>
                         </Button>
-                        <Button fx:id="btnZoomIn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#zoomIn" prefHeight="45.0" prefWidth="45.0" textAlignment="CENTER">
+                        <Button fx:id="btnZoomIn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#zoomOut" prefHeight="45.0" prefWidth="45.0" textAlignment="CENTER">
                            <graphic>
                               <ImageView fitHeight="35.0" fitWidth="35.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -149,22 +169,7 @@
                   <Insets />
                </opaqueInsets>
             </AnchorPane>
-         </top>
-         <center>
-            <AnchorPane prefHeight="660.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
-               <children>
-                  <StackPane fx:id="imageBox" layoutX="6.0" layoutY="14.0" prefHeight="749.6" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <ImageView fx:id="currentImage" fitHeight="100.0" fitWidth="100.0" onMouseDragged="#onMouseDragged" onMousePressed="#onMousePressed" onMouseReleased="#onMouseReleased" onScroll="#scrollResize" pickOnBounds="true" preserveRatio="true">
-                           <cursor>
-                              <Cursor fx:constant="OPEN_HAND" />
-                           </cursor>
-                        </ImageView>
-                     </children>
-                  </StackPane>
-               </children>
-            </AnchorPane>
-         </center>
+         </bottom>
       </BorderPane>
    </children>
 </AnchorPane>

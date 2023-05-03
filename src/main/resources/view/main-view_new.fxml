@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -61,7 +62,7 @@
                                        <graphic>
                                           <ImageView fitHeight="35.0" fitWidth="35.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@../Icon/Grey/folder.png" />
+                                                <Image url="@../Icon/Grey/folder-open-fill.png" />
                                              </image>
                                           </ImageView>
                                        </graphic>
@@ -79,7 +80,7 @@
                                        <graphic>
                                           <ImageView fitHeight="35.0" fitWidth="35.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@../Icon/Grey/pushpin.png" />
+                                                <Image url="@../Icon/Grey/book.png" />
                                              </image>
                                           </ImageView>
                                        </graphic>
@@ -143,7 +144,7 @@
                                           <Insets left="5.0" right="5.0" />
                                        </HBox.margin>
                                     </ImageView>
-                                    <TextField fx:id="searchBox" minWidth="100.0" prefHeight="30.0" prefWidth="300.0" promptText="Search Pictures">
+                                    <TextField fx:id="searchBox" minWidth="100.0" onAction="#serach" prefHeight="30.0" prefWidth="300.0" promptText="Search Pictures">
                                        <HBox.margin>
                                           <Insets />
                                        </HBox.margin>
@@ -168,9 +169,9 @@
          <center>
             <AnchorPane prefHeight="660.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
                <children>
-                  <VBox alignment="TOP_CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <VBox alignment="TOP_CENTER" prefHeight="664.8" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="50.0" prefWidth="1000.0">
+                        <ToolBar prefHeight="50.0" prefWidth="1000.0" styleClass="header_bar" VBox.vgrow="NEVER">
                           <items>
                               <Button fx:id="btnInf" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#btnInfClick" prefHeight="40.0" prefWidth="40.0" textAlignment="CENTER">
                                  <graphic>
@@ -278,11 +279,11 @@
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </padding>
                               </Button>
-                              <Button fx:id="btnLikeit" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#btnLikeitClick" prefHeight="40.0" prefWidth="40.0" textAlignment="CENTER">
+                              <Button fx:id="btnLikeit" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#btnLikeClick" prefHeight="40.0" prefWidth="40.0" textAlignment="CENTER">
                                  <graphic>
                                     <ImageView fitHeight="30.0" fitWidth="30.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../Icon/Grey/pushpin.png" />
+                                          <Image url="@../Icon/Grey/smile.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -293,18 +294,32 @@
                                     <Tooltip text="收藏" />
                                  </tooltip>
                               </Button>
+                              <Button fx:id="btnCancelLike" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#btnCancelLikeClick" prefHeight="40.0" prefWidth="40.0" textAlignment="CENTER">
+                                 <graphic>
+                                    <ImageView fitHeight="30.0" fitWidth="30.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../Icon/Grey/frown.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                                 <tooltip>
+                                    <Tooltip text="取消收藏" />
+                                 </tooltip>
+                              </Button>
                               <Separator orientation="VERTICAL" prefHeight="40.0" />
-                              <Slider fx:id="zoom" minHeight="20.0" minWidth="100.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="20.0" prefWidth="150.0" />
+                              <Slider fx:id="zoom" minHeight="20.0" minWidth="100.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="20.0" prefWidth="180.0" />
+                              <Separator orientation="VERTICAL" prefHeight="40.0" />
+                              <ComboBox fx:id="sortMethod" prefHeight="25.0" prefWidth="158.0" />
+                              <ComboBox fx:id="sortOrder" prefHeight="25.0" prefWidth="78.0" />
                           </items>
                            <VBox.margin>
                               <Insets />
                            </VBox.margin>
                         </ToolBar>
-                        <ScrollPane fx:id="center" maxHeight="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" prefWidth="1000.0" VBox.vgrow="ALWAYS">
-                          <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" />
-                          </content>
-                        </ScrollPane>
+                        <ScrollPane fx:id="center" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" prefWidth="1000.0" VBox.vgrow="ALWAYS" />
                      </children>
                   </VBox>
                </children></AnchorPane>

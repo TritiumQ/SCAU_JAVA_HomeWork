@@ -30,7 +30,7 @@ public class ImageThumbnailPane extends BorderPane
 		actionInit();
 		
 		this.imageFile = imageFile;
-		this.thumbnail = new ImageView(new Image(imageFile.getImageUri(),100,100,true,true,true));
+		this.thumbnail = new ImageView(new Image(imageFile.getImageUri(),200,200,true,true,true));
 		this.thumbnail.setPreserveRatio(true);
 		this.thumbnail.setFitHeight(size);
 		this.thumbnail.setFitWidth(size);
