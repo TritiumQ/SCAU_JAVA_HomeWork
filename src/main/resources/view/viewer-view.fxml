@@ -20,7 +20,7 @@
                <children>
                   <VBox alignment="CENTER" prefHeight="749.6" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <StackPane fx:id="imageBox" prefHeight="749.6" prefWidth="1280.0" style="-fx-border-color: BLACK];">
+                        <StackPane fx:id="imageBox" prefHeight="749.6" prefWidth="1280.0" style="-fx-border-color: BLACK;">
                            <children>
                               <ImageView fx:id="currentImage" onMouseDragged="#onMouseDragged" onMousePressed="#onMousePressed" onMouseReleased="#onMouseReleased" onScroll="#scrollResize" pickOnBounds="true" preserveRatio="true">
                                  <cursor>
