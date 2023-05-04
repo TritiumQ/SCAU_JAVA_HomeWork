@@ -1,10 +1,8 @@
-module MIKU {
+module MIKU.fin {
 	requires javafx.fxml;
 	requires javafx.graphics;
 	requires javafx.controls;
 	requires javafx.swing;
-	
-	requires org.json;
 	
 	requires java.desktop;
 	requires org.controlsfx.controls;

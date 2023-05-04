@@ -56,7 +56,7 @@ public class FavoritesUtils
 			}
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(DEFAULT_SAVE_PATH));
 			SerializableFavoritesData data = (SerializableFavoritesData) ois.readObject();
-			System.out.println(data);
+			//System.out.println(data);
 			ois.close();
 			return data;
 		}catch (Exception e)
@@ -76,7 +76,7 @@ public class FavoritesUtils
 		try
 		{
 			LinkedHashSet<String> set = new LinkedHashSet<>(List.of(data.getFavorites()));
-			System.out.println(set);
+			//System.out.println(set);
 			data.setFavorites(set.toArray(new String[0]));
 			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(DEFAULT_SAVE_PATH));
 			oos.writeObject(data);
@@ -103,7 +103,7 @@ public class FavoritesUtils
 			}
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(DEFAULT_SAVE_PATH));
 			SerializableFavoritesData data = (SerializableFavoritesData) ois.readObject();
-			System.out.println(data);
+			//System.out.println(data);
 			ois.close();
 			List<ImageFile> list = new ArrayList<>();
 			for (String path : data.getFavorites())

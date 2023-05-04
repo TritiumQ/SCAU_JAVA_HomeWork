@@ -304,7 +304,9 @@ public class ViewerController implements Initializable
 	@FXML
 	private  void slideShow() throws IOException
 	{
-		MultipleTextInputDialog dialog = new MultipleTextInputDialog(2, new String[]{"时间间隔", "循环次数(0为无限循环)"});
+		MultipleTextInputDialog dialog = new MultipleTextInputDialog(
+				2,
+				new String[]{"时间间隔", "循环次数(0为无限循环)"});
 		dialog.setTitle("设置播放");
 		dialog.setHeaderText("播放设置");
 		Optional<String[]> result = dialog.showAndWait();

@@ -241,7 +241,7 @@ public class ImageFlowPane extends FlowPane
 		switch (method)
 		{
 			case 0 -> {
-				System.out.println("按名称排序");
+				//System.out.println("按名称排序");
 				FXCollections.sort(this.getChildren(), (o1,o2) ->{
 					String name1 = ((ImageThumbnailPane)o1).getImageFile().getImageName();
 					String name2 = ((ImageThumbnailPane)o2).getImageFile().getImageName();
@@ -249,7 +249,7 @@ public class ImageFlowPane extends FlowPane
 				});
 			}
 			case 1 -> {
-				System.out.println("按大小排序");
+				//System.out.println("按大小排序");
 				FXCollections.sort(this.getChildren(), (o1, o2) -> {
 					long size1 = ((ImageThumbnailPane)o1).getImageFile().getRawFile().length();
 					long size2 = ((ImageThumbnailPane)o2).getImageFile().getRawFile().length();
@@ -257,7 +257,7 @@ public class ImageFlowPane extends FlowPane
 				});
 			}
 			case 2 -> {
-				System.out.println("按时间排序");
+				//System.out.println("按时间排序");
 				FXCollections.sort(this.getChildren(), (o1, o2) -> {
 					long time1 = ((ImageThumbnailPane)o1).getImageFile().getRawFile().lastModified();
 					long time2 = ((ImageThumbnailPane)o2).getImageFile().getRawFile().lastModified();
@@ -268,10 +268,10 @@ public class ImageFlowPane extends FlowPane
 		switch (order)
 		{
 			case 0 -> {
-				System.out.println("升序");
+				//System.out.println("升序");
 			}
 			case 1 -> {
-				System.out.println("降序");
+				//System.out.println("降序");
 				FXCollections.reverse(this.getChildren());
 			}
 		}

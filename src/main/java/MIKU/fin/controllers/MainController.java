@@ -11,6 +11,7 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -193,15 +194,15 @@ public class MainController implements Initializable
 	}
 	
 	private void initFileTree() {
-		//初始化目录树
 		systemFileTree.setRoot(new SystemFileTreeItem(FileUtil.FILE_ROOT));
 		systemFileTree.setShowRoot(false);
-		systemFileTree.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->{
-			if(newValue instanceof SystemFileTreeItem)
-			{
-				SystemFileTreeItem item = (SystemFileTreeItem) newValue;
-				setPath(item.getFile().getAbsolutePath());
-			}
+		systemFileTree.getSelectionModel().selectedItemProperty().addListener(
+				(observable, oldValue, newValue) ->{
+					if(newValue instanceof SystemFileTreeItem)
+					{
+						SystemFileTreeItem item = (SystemFileTreeItem) newValue;
+						setPath(item.getFile().getAbsolutePath());
+					}
 		});
 	}
 	private double selectX, selectY;
@@ -352,13 +353,14 @@ public class MainController implements Initializable
 	{
 		Stage aboutStage = new Stage();
 		VBox vBox = new VBox();
-		Label l1 = new Label("项目作者: TritiumQ");
+		Label l1 = new Label("项目作者: 周子川, 洪佳杰, 阳华松");
 		l1.setFont(FontUtil.genFont(FontUtil.FONT_YAHEI, 15));
-		Label l2 = new Label("项目地址: ");
+		l1.setAlignment(Pos.CENTER);
+		Label l2 = new Label("华南农业大学OOP课程实习作业");
 		l2.setFont(FontUtil.genFont(FontUtil.FONT_YAHEI, 15));
-		Hyperlink hl = new Hyperlink("https://github.com/TritiumQ/SCAU_JAVA_HomeWork.git");
-		hl.setFont(FontUtil.genFont(FontUtil.FONT_YAHEI, 15));
-		vBox.getChildren().addAll(l1,l2,hl);
+		l2.setAlignment(Pos.CENTER);
+		
+		vBox.getChildren().addAll(l1,l2);
 		Scene scn = new Scene(vBox, 320, 120);
 		aboutStage.setScene(scn);
 		aboutStage.setTitle("关于");
@@ -407,7 +409,7 @@ public class MainController implements Initializable
 	public void btnBackClick()
 	{
 		File f = new File(pathBox.getText());
-		if(f.getParent() != null && !isDir)
+		if(f.getParent() != null && isDir)
 		{
 			setPath(f.getParent());
 		}
@@ -635,7 +637,9 @@ public class MainController implements Initializable
 	public void btnPlayClick() throws IOException
 	{
 		
-		MultipleTextInputDialog dialog = new MultipleTextInputDialog(2, new String[]{"时间间隔", "循环次数(0为无限循环)"});
+		MultipleTextInputDialog dialog = new MultipleTextInputDialog(
+				2,
+				new String[]{"时间间隔", "循环次数(0为无限循环)"});
 		dialog.setTitle("设置播放");
 		dialog.setHeaderText("播放设置");
 		Optional<String[]> result = dialog.showAndWait();

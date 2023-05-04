@@ -21,7 +21,9 @@ public class MainApplication extends Application
 		stage.setMinHeight(480);
 		stage.setScene(scn);
 		stage.setTitle(Resource.PROGRAM_NAME);
-		stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResource(FileUtil.PATH_MAIN_ICON)).toExternalForm()));
+		stage.getIcons().add(new Image(
+				Objects.requireNonNull(getClass().getResource(FileUtil.PATH_MAIN_ICON)).toExternalForm())
+		);
 		stage.show();
 	}
 	
